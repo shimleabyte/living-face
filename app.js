@@ -74,25 +74,23 @@
     const x = reducedMotion.matches ? 0 : state.pointerX;
     const y = reducedMotion.matches ? 0 : state.pointerY;
     const mode = body.dataset.mode;
-    let faceX = x;
-    let faceY = y;
     let gazeX = x * 8;
     let gazeY = y * 5;
     let noseX = x * -3;
     let noseY = y * -2;
-    let noseZ = -2;
+    let noseZ = 0;
 
     if (mode === "pixel") {
       // Quantize the silhouette and eye movement into sprite-like steps.
-      faceX = Math.round(x * 4) / 4;
-      faceY = Math.round(y * 4) / 4;
+      const faceX = Math.round(x * 4) / 4;
+      const faceY = Math.round(y * 4) / 4;
       face.style.transform =
         "translate3d(" + Math.round(faceX * -12) + "px, " + Math.round(faceY * -8) + "px, 0)";
       gazeX = Math.round(x * 8 / 2) * 2;
       gazeY = Math.round(y * 5 / 2) * 2;
       noseX = Math.round(faceX * -8);
       noseY = 0;
-      noseZ = -1;
+      noseZ = 0;
     } else if (mode === "hyper") {
       const radians = Math.PI / 180;
       const headX = Math.sin(x * 34 * radians) * -5;
@@ -109,7 +107,7 @@
         "rotateX(" + (y * -1.5).toFixed(2) + "deg) rotateY(" + (x * 2).toFixed(2) + "deg)";
     }
 
-    const irisDepth = mode === "hyper" ? 12 : mode === "pixel" ? 0 : 7;
+    const irisDepth = mode === "hyper" ? 12 : 0;
     const irisTransform =
       "translate3d(calc(-50% + " + gazeX.toFixed(2) + "px), " +
       "calc(-50% + " + gazeY.toFixed(2) + "px), " + irisDepth + "px)";
@@ -168,9 +166,9 @@
       state.modeAnimation = null;
     }
 
-    if (reducedMotion.matches || typeof face.animate !== "function") return;
+    if (reducedMotion.matches || !stageModeLabel || typeof stageModeLabel.animate !== "function") return;
 
-    state.modeAnimation = stage.animate(
+    state.modeAnimation = stageModeLabel.animate(
       [{ opacity: 0.88 }, { opacity: 1 }],
       {
         duration: 260,
