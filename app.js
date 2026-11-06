@@ -6,6 +6,8 @@
   const atmosphere = stage && stage.querySelector(".stage-atmosphere");
   const face = document.getElementById("living-face");
   const mouth = face && face.querySelector(".mouth-structure");
+  const noseShadow = face && face.querySelector(".nose-cast-shadow");
+  const irises = face ? Array.from(face.querySelectorAll(".iris")) : [];
   const modeButtons = Array.from(document.querySelectorAll("[data-mode-target]"));
   const coordinateX = document.getElementById("coordinate-x");
   const coordinateY = document.getElementById("coordinate-y");
@@ -14,7 +16,7 @@
   const resetButton = document.getElementById("reset-gaze");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  if (!stage || !face || !mouth || modeButtons.length !== 3) return;
+  if (!stage || !face || !mouth || !noseShadow || irises.length !== 2 || modeButtons.length !== 3) return;
 
   const modeLabels = Object.freeze({
     cartoon: "INKED STUDY",
@@ -49,10 +51,9 @@
     state.readoutTimer = 0;
   };
 
-  // The readout is informational, not part of the gaze loop. Cap it at ~10 Hz.
+  // Coordinates are diagnostic text. They update at 10 Hz, outside the motion loop.
   const scheduleReadout = (immediate = false) => {
-    const elapsed = performance.now() - state.lastReadoutAt;
-    const wait = Math.max(0, 100 - elapsed);
+    const wait = Math.max(0, 100 - (performance.now() - state.lastReadoutAt));
 
     if (immediate || wait === 0) {
       window.clearTimeout(state.readoutTimer);
@@ -65,31 +66,71 @@
     }
   };
 
-  const applyMotionFrame = () => {
+  const applyMotionFrame = (readoutImmediate = false) => {
     state.frame = 0;
     if (document.hidden) return;
 
     const x = state.pointerX;
     const y = state.pointerY;
+    const mode = body.dataset.mode;
+    let faceX = x;
+    let faceY = y;
+    let gazeX = x * 8;
+    let gazeY = y * 5;
+    let noseX = x * -3;
+    let noseY = y * -2;
+    let noseZ = -2;
 
-    // Scope pointer variables to the face subtree, not the entire document.
-    face.style.setProperty("--mouse-x", x.toFixed(4));
-    face.style.setProperty("--mouse-y", y.toFixed(4));
-    face.style.setProperty("--gaze-x", (x * 8).toFixed(2) + "px");
-    face.style.setProperty("--gaze-y", (y * 5).toFixed(2) + "px");
-
-    // A single composited atmosphere layer supplies the moving key-light cue.
-    if (atmosphere) {
-      atmosphere.style.transform =
-        "translate3d(" + (-x * 8).toFixed(2) + "px, " + (-y * 5).toFixed(2) + "px, 0)";
+    if (mode === "pixel") {
+      // Quantize the silhouette and eye movement into sprite-like steps.
+      faceX = Math.round(x * 4) / 4;
+      faceY = Math.round(y * 4) / 4;
+      face.style.transform =
+        "translate3d(" + Math.round(faceX * -12) + "px, " + Math.round(faceY * -8) + "px, 0)";
+      gazeX = Math.round(x * 8 / 5) * 5;
+      gazeY = Math.round(y * 5 / 5) * 5;
+      noseX = Math.round(faceX * -8);
+      noseY = 0;
+      noseZ = -1;
+    } else if (mode === "hyper") {
+      const radians = Math.PI / 180;
+      const headX = Math.sin(x * 34 * radians) * -5;
+      const headY = Math.sin(y * 26 * radians) * -3;
+      face.style.transform =
+        "translate3d(" + headX.toFixed(2) + "px, " + headY.toFixed(2) + "px, 0) " +
+        "rotateX(" + (y * -2).toFixed(2) + "deg) rotateY(" + (x * 2.6).toFixed(2) + "deg)";
+      noseX = Math.sin(x * 42 * radians) * -8;
+      noseY = Math.cos(y * 35 * radians) * -4;
+      noseZ = -4;
+    } else {
+      face.style.transform =
+        "translate3d(" + (x * -3).toFixed(2) + "px, " + (y * -2).toFixed(2) + "px, 0) " +
+        "rotateX(" + (y * -1.5).toFixed(2) + "deg) rotateY(" + (x * 2).toFixed(2) + "deg)";
     }
 
-    scheduleReadout();
+    const irisDepth = mode === "hyper" ? 12 : mode === "pixel" ? 0 : 7;
+    const irisTransform =
+      "translate3d(calc(-50% + " + gazeX.toFixed(2) + "px), " +
+      "calc(-50% + " + gazeY.toFixed(2) + "px), " + irisDepth + "px)";
+
+    for (const iris of irises) {
+      iris.style.transform = irisTransform;
+    }
+
+    noseShadow.style.transform =
+      "translate3d(" + noseX.toFixed(2) + "px, " + noseY.toFixed(2) + "px, " + noseZ + "px)";
+
+    if (atmosphere) {
+      atmosphere.style.transform =
+        "translate3d(" + (x * -8).toFixed(2) + "px, " + (y * -5).toFixed(2) + "px, 0)";
+    }
+
+    scheduleReadout(readoutImmediate);
   };
 
   const requestMotionFrame = () => {
     if (!state.frame && !document.hidden) {
-      state.frame = window.requestAnimationFrame(applyMotionFrame);
+      state.frame = window.requestAnimationFrame(() => applyMotionFrame());
     }
   };
 
@@ -100,8 +141,7 @@
     if (immediate) {
       if (state.frame) window.cancelAnimationFrame(state.frame);
       state.frame = 0;
-      applyMotionFrame();
-      scheduleReadout(true);
+      applyMotionFrame(true);
     } else {
       requestMotionFrame();
     }
@@ -168,14 +208,13 @@
 
     if (document.hidden || reducedMotion.matches) return;
 
-    const delay = 2600 + Math.random() * 3400;
     state.blinkTimer = window.setTimeout(() => {
       face.classList.add("is-blinking");
       state.blinkEndTimer = window.setTimeout(() => {
         face.classList.remove("is-blinking");
         scheduleBlink();
       }, 145);
-    }, delay);
+    }, 2600 + Math.random() * 3400);
   };
 
   const triggerSpeechMotion = () => {
@@ -199,11 +238,7 @@
           { scale: "1 1.1", offset: 0.78 },
           { scale: "1 1" }
         ],
-        {
-          duration: 520,
-          easing,
-          fill: "none"
-        }
+        { duration: 520, easing, fill: "none" }
       );
 
       state.speechAnimation.onfinish = () => {
