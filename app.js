@@ -38,7 +38,8 @@
     readoutTimer: 0,
     lastReadoutAt: 0,
     speechTimer: 0,
-    speechAnimation: null
+    speechAnimation: null,
+    modeAnimation: null
   };
 
   const clampUnit = (value) => Math.max(-1, Math.min(1, value));
@@ -162,9 +163,14 @@
   };
 
   const animateModeChange = () => {
+    if (state.modeAnimation) {
+      state.modeAnimation.cancel();
+      state.modeAnimation = null;
+    }
+
     if (reducedMotion.matches || typeof face.animate !== "function") return;
 
-    face.animate(
+    state.modeAnimation = face.animate(
       [{ opacity: 0.88 }, { opacity: 1 }],
       {
         duration: 260,
@@ -172,6 +178,10 @@
         fill: "none"
       }
     );
+
+    state.modeAnimation.onfinish = () => {
+      state.modeAnimation = null;
+    };
   };
 
   const selectMode = (mode) => {
@@ -312,9 +322,16 @@
   const handleMotionPreference = () => {
     if (reducedMotion.matches) {
       stopBlink();
+      setPointer(0, 0, true);
+
       if (state.speechAnimation) {
         state.speechAnimation.cancel();
         state.speechAnimation = null;
+      }
+
+      if (state.modeAnimation) {
+        state.modeAnimation.cancel();
+        state.modeAnimation = null;
       }
     } else {
       scheduleBlink();
