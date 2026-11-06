@@ -8,7 +8,7 @@ A frameworkless, CSS-built portrait study. The face is assembled from semantic D
 - **Pixel / 16-bit** — stepped silhouette geometry, block-built facial features, quantized gaze and a fixed pixel-grid overlay.
 - **Volume / 3D** — nested perspective planes, volumetric radial lighting, layered facial relief and a pointer-sensitive cast shadow beneath the nose.
 
-All three systems reuse the same facial structure. Mode changes are CSS-driven through `body[data-mode]`.
+All three systems reuse the same facial structure. Cartoon and pixel modes use a flattened 2D rendering tree; only hyper enables the nested 3D scene. Mode changes are CSS-driven through `body[data-mode]`.
 
 ## Interaction
 
@@ -38,6 +38,8 @@ Open `index.html` in a modern browser. No install or build step is required.
 - Diagnostic coordinate text is throttled independently of gaze rendering.
 - Moving gradient coordinates and procedural SVG turbulence were removed from the hot path.
 - Layer promotion is limited to the head, iris, nose shadow and stage atmosphere; static facial features are not marked `will-change`.
+- The cartoon and pixel modes disable stage perspective and flatten nested 3D contexts; full `preserve-3d` depth is reserved for hyper mode.
+- Pixel mode avoids filtering the complete face subtree; the offset silhouette is drawn by the separate back-volume layer.
 - Button press feedback uses immediate active-state transforms and opacity. Mode changes use a short opacity transition.
 - The Web Animations API drives mouth response without a synchronous layout flush.
 - No web worker, debounce pipeline or background queue is added: the app has no heavy data operations that would justify their messaging and scheduling overhead.
