@@ -3096,3 +3096,81 @@ body[data-mode="hyper"] .face-base.is-blinking .eye {
     transition: none;
   }
 }
+
+
+/* --------------------------------------------------------------------------
+   PERF PASS — flat rendering is the default; real depth is exclusive to hyper.
+   Cartoon and pixel do not need a preserved 3D scene.
+   -------------------------------------------------------------------------- */
+body:not([data-mode="hyper"]) .face-stage {
+  perspective: none;
+}
+
+body:not([data-mode="hyper"]) .portrait-wrap,
+body:not([data-mode="hyper"]) .face-base,
+body:not([data-mode="hyper"]) .face-surface,
+body:not([data-mode="hyper"]) .eye,
+body:not([data-mode="hyper"]) .nose-structure,
+body:not([data-mode="hyper"]) .mouth-structure {
+  transform-style: flat;
+}
+
+body:not([data-mode="hyper"]) .face-back-volume,
+body:not([data-mode="hyper"]) .face-neck,
+body:not([data-mode="hyper"]) .forehead-plane,
+body:not([data-mode="hyper"]) .temple-plane,
+body:not([data-mode="hyper"]) .brow-ridge,
+body:not([data-mode="hyper"]) .under-eye-plane,
+body:not([data-mode="hyper"]) .cheek-plane,
+body:not([data-mode="hyper"]) .jaw-plane,
+body:not([data-mode="hyper"]) .chin-plane,
+body:not([data-mode="hyper"]) .eyebrow,
+body:not([data-mode="hyper"]) .eye,
+body:not([data-mode="hyper"]) .eyeball,
+body:not([data-mode="hyper"]) .upper-eyelid-crease,
+body:not([data-mode="hyper"]) .lower-eyelid,
+body:not([data-mode="hyper"]) .nose-structure,
+body:not([data-mode="hyper"]) .nose-root,
+body:not([data-mode="hyper"]) .nose-bridge,
+body:not([data-mode="hyper"]) .nose-bridge-highlight,
+body:not([data-mode="hyper"]) .nose-sidewall,
+body:not([data-mode="hyper"]) .nose-tip,
+body:not([data-mode="hyper"]) .nose-tip-highlight,
+body:not([data-mode="hyper"]) .nose-alar,
+body:not([data-mode="hyper"]) .nose-nostril,
+body:not([data-mode="hyper"]) .nose-columella,
+body:not([data-mode="hyper"]) .philtrum,
+body:not([data-mode="hyper"]) .mouth-structure,
+body:not([data-mode="hyper"]) .face-edge-light {
+  transform: none;
+}
+
+body[data-mode="cartoon"] .face-ear--left {
+  transform: rotate(-7deg);
+}
+
+body[data-mode="cartoon"] .face-ear--right {
+  transform: rotate(7deg);
+}
+
+body[data-mode="pixel"] .face-ear--left {
+  transform: none;
+}
+
+body[data-mode="pixel"] .face-ear--right {
+  transform: none;
+}
+
+body:not([data-mode="hyper"]) .face-base::after,
+body:not([data-mode="hyper"]) .face-grain,
+body:not([data-mode="hyper"]) .iris-fibers {
+  mix-blend-mode: normal;
+}
+
+body[data-mode="pixel"] .face-base {
+  filter: none;
+}
+
+body[data-mode="pixel"] .face-back-volume {
+  box-shadow: 7px 7px 0 #302c2b;
+}
