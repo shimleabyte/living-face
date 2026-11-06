@@ -1,33 +1,14 @@
 (() => {
   "use strict";
 
-  const body = document.body;
-  const stage = document.getElementById("face-stage");
-  const atmosphere = stage && stage.querySelector(".stage-atmosphere");
   const face = document.getElementById("living-face");
+  const stage = document.getElementById("face-stage");
   const mouth = face && face.querySelector(".mouth-structure");
   const noseShadow = face && face.querySelector(".nose-cast-shadow");
   const irises = face ? Array.from(face.querySelectorAll(".iris")) : [];
-  const modeButtons = Array.from(document.querySelectorAll("[data-mode-target]"));
-  const coordinateX = document.getElementById("coordinate-x");
-  const coordinateY = document.getElementById("coordinate-y");
-  const stageModeLabel = document.getElementById("stage-mode-label");
-  const expressionState = document.getElementById("expression-state");
-  const resetButton = document.getElementById("reset-gaze");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  if (!stage || !face || !mouth || !noseShadow || irises.length !== 2 || modeButtons.length !== 3) return;
-
-  const modeLabels = Object.freeze({
-    cartoon: "INKED STUDY",
-    pixel: "16-BIT SPRITE",
-    hyper: "VOLUMETRIC STUDY"
-  });
-
-  const modeControls = modeButtons.map((button) => ({
-    button,
-    state: button.querySelector(".mode-state")
-  }));
+  if (!face || !stage || !mouth || !noseShadow || irises.length !== 2) return;
 
   const state = {
     pointerX: 0,
@@ -35,101 +16,36 @@
     frame: 0,
     blinkTimer: 0,
     blinkEndTimer: 0,
-    readoutTimer: 0,
-    lastReadoutAt: 0,
     speechTimer: 0,
-    speechAnimation: null,
-    modeAnimation: null
+    speechAnimation: null
   };
 
   const clampUnit = (value) => Math.max(-1, Math.min(1, value));
-  const formatCoordinate = (value) => (value < 0 ? "" : "+") + value.toFixed(2);
 
-  const renderReadout = () => {
-    if (coordinateX) coordinateX.value = formatCoordinate(state.pointerX);
-    if (coordinateY) coordinateY.value = formatCoordinate(state.pointerY);
-    state.lastReadoutAt = performance.now();
-    state.readoutTimer = 0;
-  };
-
-  // Coordinates are diagnostic text. They update at 10 Hz, outside the motion loop.
-  const scheduleReadout = (immediate = false) => {
-    const wait = Math.max(0, 100 - (performance.now() - state.lastReadoutAt));
-
-    if (immediate || wait === 0) {
-      window.clearTimeout(state.readoutTimer);
-      renderReadout();
-      return;
-    }
-
-    if (!state.readoutTimer) {
-      state.readoutTimer = window.setTimeout(renderReadout, wait);
-    }
-  };
-
-  const applyMotionFrame = (readoutImmediate = false) => {
+  const applyMotionFrame = () => {
     state.frame = 0;
     if (document.hidden) return;
 
     const x = reducedMotion.matches ? 0 : state.pointerX;
     const y = reducedMotion.matches ? 0 : state.pointerY;
-    const mode = body.dataset.mode;
-    let gazeX = x * 8;
-    let gazeY = y * 5;
-    let noseX = x * -3;
-    let noseY = y * -2;
-    let noseZ = 0;
 
-    if (mode === "pixel") {
-      // Quantize the silhouette and eye movement into sprite-like steps.
-      const faceX = Math.round(x * 4) / 4;
-      const faceY = Math.round(y * 4) / 4;
-      face.style.transform =
-        "translate3d(" + Math.round(faceX * -12) + "px, " + Math.round(faceY * -8) + "px, 0)";
-      gazeX = Math.round(x * 8 / 2) * 2;
-      gazeY = Math.round(y * 5 / 2) * 2;
-      noseX = Math.round(faceX * -8);
-      noseY = 0;
-      noseZ = 0;
-    } else if (mode === "hyper") {
-      const radians = Math.PI / 180;
-      const headX = Math.sin(x * 34 * radians) * -5;
-      const headY = Math.sin(y * 26 * radians) * -3;
-      face.style.transform =
-        "translate3d(" + headX.toFixed(2) + "px, " + headY.toFixed(2) + "px, 0) " +
-        "rotateX(" + (y * -2).toFixed(2) + "deg) rotateY(" + (x * 2.6).toFixed(2) + "deg)";
-      noseX = Math.sin(x * 42 * radians) * -8;
-      noseY = Math.cos(y * 35 * radians) * -4;
-      noseZ = -4;
-    } else {
-      face.style.transform =
-        "translate3d(" + (x * -3).toFixed(2) + "px, " + (y * -2).toFixed(2) + "px, 0) " +
-        "rotate(" + (x * 1.2).toFixed(2) + "deg)";
-    }
+    face.style.transform =
+      "translate3d(" + (x * -3).toFixed(2) + "px, " + (y * -2).toFixed(2) + "px, 0) " +
+      "rotate(" + (x * 1.2).toFixed(2) + "deg)";
 
-    const irisDepth = mode === "hyper" ? 12 : 0;
     const irisTransform =
-      "translate3d(calc(-50% + " + gazeX.toFixed(2) + "px), " +
-      "calc(-50% + " + gazeY.toFixed(2) + "px), " + irisDepth + "px)";
+      "translate3d(calc(-50% + " + (x * 8).toFixed(2) + "px), " +
+      "calc(-50% + " + (y * 5).toFixed(2) + "px), 0)";
 
-    for (const iris of irises) {
-      iris.style.transform = irisTransform;
-    }
+    for (const iris of irises) iris.style.transform = irisTransform;
 
     noseShadow.style.transform =
-      "translate3d(" + noseX.toFixed(2) + "px, " + noseY.toFixed(2) + "px, " + noseZ + "px)";
-
-    if (atmosphere) {
-      atmosphere.style.transform =
-        "translate3d(" + (x * -8).toFixed(2) + "px, " + (y * -5).toFixed(2) + "px, 0)";
-    }
-
-    scheduleReadout(readoutImmediate);
+      "translate3d(" + (x * -3).toFixed(2) + "px, " + (y * -2).toFixed(2) + "px, 0)";
   };
 
   const requestMotionFrame = () => {
     if (!state.frame && !document.hidden) {
-      state.frame = window.requestAnimationFrame(() => applyMotionFrame());
+      state.frame = window.requestAnimationFrame(applyMotionFrame);
     }
   };
 
@@ -140,64 +56,22 @@
     if (immediate) {
       if (state.frame) window.cancelAnimationFrame(state.frame);
       state.frame = 0;
-      applyMotionFrame(true);
+      applyMotionFrame();
     } else {
       requestMotionFrame();
     }
   };
 
-  const awakenFace = () => {
-    if (!face.classList.contains("is-awake")) {
-      face.classList.add("is-awake");
-    }
-  };
+  const awakenFace = () => face.classList.add("is-awake");
 
   const handlePointerMove = (event) => {
+    if (event.pointerType === "touch") return;
+
     setPointer(
       (event.clientX / Math.max(window.innerWidth, 1)) * 2 - 1,
       (event.clientY / Math.max(window.innerHeight, 1)) * 2 - 1
     );
     awakenFace();
-  };
-
-  const animateModeChange = () => {
-    if (state.modeAnimation) {
-      state.modeAnimation.cancel();
-      state.modeAnimation = null;
-    }
-
-    if (reducedMotion.matches || !stageModeLabel || typeof stageModeLabel.animate !== "function") return;
-
-    state.modeAnimation = stageModeLabel.animate(
-      [{ opacity: 0.88 }, { opacity: 1 }],
-      {
-        duration: 260,
-        easing: "cubic-bezier(.16, 1, .3, 1)",
-        fill: "none"
-      }
-    );
-
-    state.modeAnimation.onfinish = () => {
-      state.modeAnimation = null;
-    };
-  };
-
-  const selectMode = (mode) => {
-    if (!Object.prototype.hasOwnProperty.call(modeLabels, mode) || body.dataset.mode === mode) return;
-
-    body.dataset.mode = mode;
-    if (stageModeLabel) stageModeLabel.textContent = modeLabels[mode];
-
-    for (const control of modeControls) {
-      const selected = control.button.dataset.modeTarget === mode;
-      control.button.classList.toggle("is-active", selected);
-      control.button.setAttribute("aria-pressed", String(selected));
-      if (control.state) control.state.textContent = selected ? "ACTIVE" : "SELECT";
-    }
-
-    requestMotionFrame();
-    animateModeChange();
-    if (expressionState) expressionState.textContent = "EXPRESSION: NEUTRAL";
   };
 
   const stopBlink = () => {
@@ -225,7 +99,7 @@
     }, 2600 + Math.random() * 3400);
   };
 
-  const triggerSpeechMotion = () => {
+  const triggerExpression = () => {
     awakenFace();
 
     if (state.speechAnimation) {
@@ -234,10 +108,6 @@
     }
 
     if (!reducedMotion.matches && typeof mouth.animate === "function") {
-      const easing = body.dataset.mode === "pixel"
-        ? "steps(2, end)"
-        : "cubic-bezier(.16, 1, .3, 1)";
-
       state.speechAnimation = mouth.animate(
         [
           { scale: "1 1" },
@@ -246,28 +116,18 @@
           { scale: "1 1.1", offset: 0.78 },
           { scale: "1 1" }
         ],
-        { duration: 520, easing, fill: "none" }
+        { duration: 520, easing: "cubic-bezier(.16, 1, .3, 1)", fill: "none" }
       );
-
-      state.speechAnimation.onfinish = () => {
-        state.speechAnimation = null;
-      };
+      state.speechAnimation.onfinish = () => { state.speechAnimation = null; };
     }
 
-    if (expressionState) expressionState.textContent = "EXPRESSION: RESPONDING";
     window.clearTimeout(state.speechTimer);
     state.speechTimer = window.setTimeout(() => {
-      if (expressionState) expressionState.textContent = "EXPRESSION: NEUTRAL";
+      state.speechTimer = 0;
     }, 620);
   };
 
-  for (const { button } of modeControls) {
-    button.addEventListener("click", () => selectMode(button.dataset.modeTarget));
-    button.addEventListener("focus", awakenFace);
-  }
-
   window.addEventListener("pointermove", handlePointerMove, { passive: true });
-
   window.addEventListener("pointerout", (event) => {
     if (event.relatedTarget !== null) return;
     setPointer(0, 0);
@@ -275,34 +135,12 @@
 
   stage.addEventListener("pointerenter", awakenFace, { passive: true });
   stage.addEventListener("pointerdown", awakenFace, { passive: true });
-
-  face.addEventListener("click", triggerSpeechMotion);
+  face.addEventListener("click", triggerExpression);
   face.addEventListener("focus", awakenFace);
   face.addEventListener("keydown", (event) => {
     if (event.key !== "Enter" && event.key !== " ") return;
     event.preventDefault();
-    triggerSpeechMotion();
-  });
-
-  if (resetButton) {
-    resetButton.addEventListener("click", () => {
-      setPointer(0, 0, true);
-      if (expressionState) expressionState.textContent = "EXPRESSION: RECENTERED";
-      window.setTimeout(() => {
-        if (expressionState) expressionState.textContent = "EXPRESSION: NEUTRAL";
-      }, 700);
-    });
-  }
-
-  document.addEventListener("keydown", (event) => {
-    if (event.altKey || event.ctrlKey || event.metaKey) return;
-
-    const activeTag = document.activeElement && document.activeElement.tagName;
-    if (activeTag === "INPUT" || activeTag === "TEXTAREA" || activeTag === "SELECT") return;
-
-    const shortcuts = { "1": "cartoon", "2": "pixel", "3": "hyper" };
-    const nextMode = shortcuts[event.key];
-    if (nextMode) selectMode(nextMode);
+    triggerExpression();
   });
 
   document.addEventListener("visibilitychange", () => {
@@ -312,7 +150,6 @@
       state.frame = 0;
       return;
     }
-
     setPointer(0, 0, true);
     scheduleBlink();
   });
@@ -321,15 +158,9 @@
     if (reducedMotion.matches) {
       stopBlink();
       setPointer(0, 0, true);
-
       if (state.speechAnimation) {
         state.speechAnimation.cancel();
         state.speechAnimation = null;
-      }
-
-      if (state.modeAnimation) {
-        state.modeAnimation.cancel();
-        state.modeAnimation = null;
       }
     } else {
       scheduleBlink();
@@ -344,7 +175,6 @@
 
   window.addEventListener("pagehide", () => {
     stopBlink();
-    window.clearTimeout(state.readoutTimer);
     window.clearTimeout(state.speechTimer);
     if (state.frame) window.cancelAnimationFrame(state.frame);
   }, { once: true });
