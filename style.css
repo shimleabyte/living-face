@@ -667,7 +667,6 @@ a:focus-visible {
   height: 35%;
   border-radius: 50%;
   background: rgba(86, 45, 41, .35);
-  filter: none;
 }
 
 .face-ear {
@@ -917,7 +916,6 @@ a:focus-visible {
   inset: -20% -10% -18%;
   border-radius: 50%;
   background: radial-gradient(ellipse, rgba(73, 39, 37, .25), transparent 70%);
-  filter: none;
 }
 
 .eye-orbital-shadow {
@@ -1054,7 +1052,6 @@ a:focus-visible {
   left: 31%;
   border-radius: 50%;
   background: rgba(255, 212, 174, .24);
-  filter: none;
 }
 
 .upper-lashline {
@@ -1187,7 +1184,6 @@ a:focus-visible {
   left: 47%;
   border-radius: 50%;
   background: linear-gradient(180deg, rgba(255, 224, 190, .58), rgba(255, 224, 190, .13));
-  filter: none;
 }
 
 .nose-sidewall {
@@ -1233,7 +1229,6 @@ a:focus-visible {
   left: 40%;
   border-radius: 50%;
   background: rgba(255, 229, 196, .56);
-  filter: none;
   transform: translateZ(14px);
 }
 
@@ -1301,7 +1296,6 @@ a:focus-visible {
   left: 3%;
   border-radius: 50%;
   background: radial-gradient(ellipse at 50% 42%, rgba(81, 38, 38, .38), rgba(113, 55, 49, .18) 43%, transparent 74%);
-  filter: none;
   opacity: .75;
   transform: translate3d(0, 0, -2px);
   will-change: transform;
@@ -1346,7 +1340,6 @@ a:focus-visible {
   left: 41%;
   border-radius: 50%;
   background: rgba(131, 64, 55, .13);
-  filter: none;
 }
 
 .mouth-structure {
@@ -1549,7 +1542,6 @@ a:focus-visible {
   left: 33%;
   border-radius: 50%;
   background: rgba(255, 196, 170, .38);
-  filter: none;
 }
 
 .mouth-corner {
@@ -1616,7 +1608,6 @@ a:focus-visible {
   left: 13%;
   border-radius: 50%;
   background: linear-gradient(180deg, rgba(255, 226, 193, .22), transparent);
-  filter: none;
   transform: rotate(18deg);
 }
 
@@ -1628,7 +1619,6 @@ a:focus-visible {
   right: 13%;
   border-radius: 50%;
   background: rgba(255, 211, 175, .16);
-  filter: none;
 }
 
 .face-speculars span {
@@ -1639,7 +1629,6 @@ a:focus-visible {
   left: 38%;
   border-radius: 50%;
   background: rgba(255, 224, 190, .13);
-  filter: none;
 }
 
 .face-edge-light {
@@ -1835,7 +1824,6 @@ body[data-mode="cartoon"] .eyebrow {
 
 body[data-mode="cartoon"] .eye-socket {
   background: rgba(91, 47, 43, .24);
-  filter: none;
 }
 
 body[data-mode="cartoon"] .eyeball {
@@ -1898,7 +1886,6 @@ body[data-mode="cartoon"] .nose-cast-shadow {
   height: 42%;
   top: 59%;
   background: radial-gradient(ellipse at 50% 42%, rgba(71, 31, 32, .52), rgba(117, 51, 47, .2) 43%, transparent 73%);
-  filter: none;
 }
 
 body[data-mode="cartoon"] .upper-lip {
@@ -1960,7 +1947,6 @@ body[data-mode="cartoon"] .mouth-structure::after {
   height: 7%;
   border-radius: 50%;
   background: rgba(255, 205, 171, .6);
-  filter: none;
 }
 
 body[data-mode="cartoon"] .face-surface::before {
@@ -2138,7 +2124,6 @@ body[data-mode="pixel"] .eye-socket {
   inset: -15% -8%;
   border-radius: 0;
   background: #84533f;
-  filter: none;
   clip-path: polygon(8% 0, 92% 0, 100% 40%, 92% 100%, 8% 100%, 0 40%);
 }
 
@@ -2240,7 +2225,6 @@ body[data-mode="pixel"] .nose-alar,
 body[data-mode="pixel"] .nose-columella,
 body[data-mode="pixel"] .nose-cast-shadow {
   border-radius: 0;
-  filter: none;
 }
 
 body[data-mode="pixel"] .nose-glabella {
@@ -2261,7 +2245,6 @@ body[data-mode="pixel"] .nose-bridge {
 
 body[data-mode="pixel"] .nose-bridge-highlight {
   background: #ffd19a;
-  filter: none;
 }
 
 body[data-mode="pixel"] .nose-sidewall {
@@ -2278,7 +2261,6 @@ body[data-mode="pixel"] .nose-tip {
 
 body[data-mode="pixel"] .nose-tip-highlight {
   background: #ffd29a;
-  filter: none;
 }
 
 body[data-mode="pixel"] .nose-alar {
@@ -2387,7 +2369,6 @@ body[data-mode="pixel"] .lower-lip-highlight,
 body[data-mode="pixel"] .mouth-corner {
   border-radius: 0;
   background: #e4a07a;
-  filter: none;
 }
 
 body[data-mode="pixel"] .skin-detail,
@@ -2546,7 +2527,6 @@ body[data-mode="hyper"] .temple-plane {
   width: 33%;
   height: 36%;
   background: radial-gradient(ellipse, rgba(110, 52, 47, .31), rgba(121, 63, 52, .1) 50%, transparent 73%);
-  filter: none;
   transform: translateZ(16px);
 }
 
@@ -2554,7 +2534,6 @@ body[data-mode="hyper"] .brow-ridge {
   height: 14%;
   background:
     radial-gradient(ellipse at 50% 60%, rgba(255, 212, 169, .46), rgba(136, 66, 54, .26) 53%, transparent 75%);
-  filter: none;
   transform: translateZ(29px);
 }
 
@@ -2564,7 +2543,6 @@ body[data-mode="hyper"] .under-eye-plane {
   background:
     radial-gradient(ellipse at 50% 40%, rgba(113, 57, 52, .34), rgba(159, 88, 69, .18) 46%, transparent 76%),
     radial-gradient(ellipse at 50% 100%, rgba(255, 197, 152, .25), transparent 65%);
-  filter: none;
   transform: translateZ(18px);
 }
 
@@ -2575,7 +2553,6 @@ body[data-mode="hyper"] .cheek-plane {
   background:
     radial-gradient(ellipse at 44% 38%, rgba(255, 216, 173, .55) 0%, rgba(247, 185, 137, .2) 36%, transparent 67%),
     radial-gradient(ellipse at 50% 78%, rgba(127, 56, 50, .3), transparent 68%);
-  filter: none;
   transform: translateZ(24px);
 }
 
@@ -2608,7 +2585,6 @@ body[data-mode="hyper"] .eye {
 body[data-mode="hyper"] .eye-socket {
   inset: -28% -11% -20%;
   background: radial-gradient(ellipse, rgba(71, 36, 35, .44), rgba(116, 59, 49, .2) 48%, transparent 76%);
-  filter: none;
 }
 
 body[data-mode="hyper"] .eye-orbital-shadow {
@@ -2699,7 +2675,6 @@ body[data-mode="hyper"] .nose-bridge {
 body[data-mode="hyper"] .nose-bridge-highlight {
   width: 12%;
   background: linear-gradient(180deg, rgba(255, 239, 210, .78), rgba(255, 221, 185, .14));
-  filter: none;
   transform: translateZ(18px);
 }
 
@@ -2707,7 +2682,6 @@ body[data-mode="hyper"] .nose-sidewall {
   width: 38%;
   height: 70%;
   background: linear-gradient(90deg, rgba(91, 43, 40, .42), rgba(119, 59, 51, .1) 68%, transparent);
-  filter: none;
   transform: translateZ(16px);
 }
 
@@ -2729,7 +2703,6 @@ body[data-mode="hyper"] .nose-tip-highlight {
   width: 24%;
   height: 14%;
   background: rgba(255, 231, 199, .8);
-  filter: none;
   transform: translateZ(31px);
 }
 
@@ -2761,7 +2734,6 @@ body[data-mode="hyper"] .nose-cast-shadow {
   height: 44%;
   background:
     radial-gradient(ellipse at 50% 42%, rgba(55, 25, 29, .52) 0%, rgba(92, 42, 42, .28) 36%, rgba(128, 59, 50, .09) 59%, transparent 76%);
-  filter: none;
   opacity: .88;
   transform: translate3d(0, 0, -4px);
   transition: opacity 180ms ease-out;
@@ -2794,18 +2766,15 @@ body[data-mode="hyper"] .lower-lip {
 }
 
 body[data-mode="hyper"] .skin-detail {
-  filter: none;
   background: radial-gradient(ellipse, rgba(215, 113, 96, .19), transparent 72%);
 }
 
 body[data-mode="hyper"] .face-speculars i {
   width: 16%;
-  filter: none;
   background: linear-gradient(180deg, rgba(255, 237, 205, .32), transparent);
 }
 
 body[data-mode="hyper"] .face-speculars b {
-  filter: none;
   background: rgba(255, 219, 179, .23);
 }
 
