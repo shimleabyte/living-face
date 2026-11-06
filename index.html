@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111713">
+  <meta name="description" content="A frameworkless study of expression, light, geometry, and responsive facial motion.">
+  <title>Living Face — An expressive study</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body data-mode="cartoon">
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="wordmark" href="#top" aria-label="Living Face home">
+        <span class="wordmark-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="wordmark-name">LIVING<span>FACE</span></span>
+      </a>
+      <div class="topbar-center">
+        <span class="topbar-kicker">A responsive character study</span>
+        <span class="topbar-divider" aria-hidden="true"></span>
+        <span class="topbar-edition">SPECIMEN / 001</span>
+      </div>
+      <div class="topbar-status">
+        <span class="status-pip" aria-hidden="true"></span>
+        <span>LIVE SURFACE</span>
+      </div>
+    </header>
+
+    <main id="top" class="main-layout">
+      <aside class="intro-rail" aria-labelledby="intro-title">
+        <div class="rail-index"><span>01</span><span class="rail-index-rule"></span><span>PORTRAIT ENGINE</span></div>
+        <p class="eyebrow">A FACE THAT NOTICES YOU</p>
+        <h1 id="intro-title">Presence,<br><em>in motion.</em></h1>
+        <p class="intro-copy">A constructed face built from light, shadow and small movements. Move around the field. It follows with its eyes.</p>
+
+        <div class="rail-note">
+          <span class="note-mark" aria-hidden="true">↘</span>
+          <div>
+            <strong>Interaction study</strong>
+            <p>Pointer position drives gaze, facial parallax and the direction of the key light.</p>
+          </div>
+        </div>
+
+        <div class="rail-coordinates" aria-label="Pointer coordinates">
+          <div><span>HORIZONTAL</span><output id="coordinate-x">+0.00</output></div>
+          <div><span>VERTICAL</span><output id="coordinate-y">+0.00</output></div>
+        </div>
+      </aside>
+
+      <section class="face-lab" aria-label="Interactive portrait laboratory">
+        <div class="lab-heading">
+          <div>
+            <span class="section-overline">RENDER STUDY</span>
+            <h2>Choose a material</h2>
+          </div>
+          <p class="lab-counter">3 <span>/</span> VISUAL SYSTEMS</p>
+        </div>
+
+        <nav class="mode-switcher" aria-label="Face rendering mode">
+          <button class="mode-button is-active" type="button" data-mode-target="cartoon" aria-pressed="true">
+            <span class="mode-number">01</span><span class="mode-name">INK / VECTOR</span><span class="mode-state">ACTIVE</span>
+          </button>
+          <button class="mode-button" type="button" data-mode-target="pixel" aria-pressed="false">
+            <span class="mode-number">02</span><span class="mode-name">PIXEL / 16-BIT</span><span class="mode-state">SELECT</span>
+          </button>
+          <button class="mode-button" type="button" data-mode-target="hyper" aria-pressed="false">
+            <span class="mode-number">03</span><span class="mode-name">VOLUME / 3D</span><span class="mode-state">SELECT</span>
+          </button>
+        </nav>
+
+        <div class="face-stage" id="face-stage">
+          <div class="stage-atmosphere" aria-hidden="true"></div>
+          <div class="stage-grid" aria-hidden="true"></div>
+          <div class="stage-crosshair stage-crosshair--horizontal" aria-hidden="true"></div>
+          <div class="stage-crosshair stage-crosshair--vertical" aria-hidden="true"></div>
+          <div class="stage-index stage-index--top"><span>FIG. 001</span><span>LIVE / TRACKING</span></div>
+          <div class="stage-index stage-index--bottom"><span>AXIS X / Y</span><span class="stage-mode-label" id="stage-mode-label">INKED STUDY</span></div>
+
+          <div class="portrait-wrap">
+            <div class="portrait-shadow" aria-hidden="true"></div>
+            <div class="face-base" id="living-face" role="img" aria-label="Stylized expressive face with eyes that track pointer movement">
+              <div class="face-back-volume" aria-hidden="true"></div>
+              <div class="face-neck" aria-hidden="true"><span class="neck-shadow"></span></div>
+              <div class="face-ear face-ear--left" aria-hidden="true"><i></i><b></b></div>
+              <div class="face-ear face-ear--right" aria-hidden="true"><i></i><b></b></div>
+
+              <div class="face-surface">
+                <div class="forehead-plane" aria-hidden="true"></div>
+                <div class="temple-plane temple-plane--left" aria-hidden="true"></div>
+                <div class="temple-plane temple-plane--right" aria-hidden="true"></div>
+                <div class="brow-ridge brow-ridge--left" aria-hidden="true"></div>
+                <div class="brow-ridge brow-ridge--right" aria-hidden="true"></div>
+                <div class="under-eye-plane under-eye-plane--left" aria-hidden="true"></div>
+                <div class="under-eye-plane under-eye-plane--right" aria-hidden="true"></div>
+                <div class="cheek-plane cheek-plane--left" aria-hidden="true"></div>
+                <div class="cheek-plane cheek-plane--right" aria-hidden="true"></div>
+                <div class="jaw-plane" aria-hidden="true"></div>
+                <div class="chin-plane" aria-hidden="true"></div>
+
+                <div class="eyebrow eyebrow--left" aria-hidden="true">
+                  <span class="eyebrow-body"></span><i class="eyebrow-hair eyebrow-hair--one"></i><i class="eyebrow-hair eyebrow-hair--two"></i><i class="eyebrow-hair eyebrow-hair--three"></i>
+                </div>
+                <div class="eyebrow eyebrow--right" aria-hidden="true">
+                  <span class="eyebrow-body"></span><i class="eyebrow-hair eyebrow-hair--one"></i><i class="eyebrow-hair eyebrow-hair--two"></i><i class="eyebrow-hair eyebrow-hair--three"></i>
+                </div>
+
+                <div class="eye eye--left" aria-hidden="true">
+                  <span class="eye-socket"></span>
+                  <span class="eye-orbital-shadow"></span>
+                  <span class="eyeball">
+                    <span class="iris">
+                      <span class="iris-ring iris-ring--outer"></span>
+                      <span class="iris-ring iris-ring--inner"></span>
+                      <span class="iris-fibers"></span>
+                      <span class="pupil">
+                        <i class="pupil-highlight pupil-highlight--primary"></i>
+                        <i class="pupil-highlight pupil-highlight--secondary"></i>
+                      </span>
+                    </span>
+                  </span>
+                  <span class="upper-eyelid"><i class="upper-lashline"></i></span>
+                  <span class="upper-eyelid-crease"></span>
+                  <span class="lower-eyelid"><i class="lower-waterline"></i></span>
+                  <span class="tear-duct"></span>
+                  <span class="eye-corner eye-corner--outer"></span>
+                </div>
+
+                <div class="eye eye--right" aria-hidden="true">
+                  <span class="eye-socket"></span>
+                  <span class="eye-orbital-shadow"></span>
+                  <span class="eyeball">
+                    <span class="iris">
+                      <span class="iris-ring iris-ring--outer"></span>
+                      <span class="iris-ring iris-ring--inner"></span>
+                      <span class="iris-fibers"></span>
+                      <span class="pupil">
+                        <i class="pupil-highlight pupil-highlight--primary"></i>
+                        <i class="pupil-highlight pupil-highlight--secondary"></i>
+                      </span>
+                    </span>
+                  </span>
+                  <span class="upper-eyelid"><i class="upper-lashline"></i></span>
+                  <span class="upper-eyelid-crease"></span>
+                  <span class="lower-eyelid"><i class="lower-waterline"></i></span>
+                  <span class="tear-duct"></span>
+                  <span class="eye-corner eye-corner--outer"></span>
+                </div>
+
+                <div class="nose-structure" aria-hidden="true">
+                  <span class="nose-glabella"></span>
+                  <span class="nose-root"></span>
+                  <span class="nose-bridge"></span>
+                  <span class="nose-bridge-highlight"></span>
+                  <span class="nose-sidewall nose-sidewall--left"></span>
+                  <span class="nose-sidewall nose-sidewall--right"></span>
+                  <span class="nose-tip"></span>
+                  <span class="nose-tip-highlight"></span>
+                  <span class="nose-alar nose-alar--left"></span>
+                  <span class="nose-alar nose-alar--right"></span>
+                  <span class="nose-nostril nose-nostril--left"></span>
+                  <span class="nose-nostril nose-nostril--right"></span>
+                  <span class="nose-columella"></span>
+                  <span class="nose-cast-shadow"></span>
+                </div>
+
+                <div class="philtrum" aria-hidden="true"><span class="philtrum-column philtrum-column--left"></span><span class="philtrum-column philtrum-column--right"></span><span class="philtrum-well"></span></div>
+
+                <div class="mouth-structure" aria-hidden="true">
+                  <span class="mouth-smile-fold mouth-smile-fold--left"></span>
+                  <span class="mouth-smile-fold mouth-smile-fold--right"></span>
+                  <span class="upper-lip">
+                    <i class="upper-lip-peak upper-lip-peak--left"></i>
+                    <i class="upper-lip-peak upper-lip-peak--right"></i>
+                    <i class="cupid-bow"></i>
+                  </span>
+                  <span class="mouth-cavity">
+                    <span class="upper-gum"></span>
+                    <span class="teeth">
+                      <i class="tooth tooth--one"></i><i class="tooth tooth--two"></i><i class="tooth tooth--three"></i><i class="tooth tooth--four"></i><i class="tooth tooth--five"></i><i class="tooth tooth--six"></i>
+                    </span>
+                    <span class="tongue"><i class="tongue-groove"></i></span>
+                    <span class="lower-gum"></span>
+                  </span>
+                  <span class="lower-lip"><i class="lower-lip-highlight"></i></span>
+                  <span class="mouth-corner mouth-corner--left"></span>
+                  <span class="mouth-corner mouth-corner--right"></span>
+                  <span class="chin-cleft"></span>
+                </div>
+
+                <div class="skin-detail skin-detail--left" aria-hidden="true"></div>
+                <div class="skin-detail skin-detail--right" aria-hidden="true"></div>
+                <div class="face-speculars" aria-hidden="true"><i></i><b></b><span></span></div>
+              </div>
+              <div class="face-edge-light" aria-hidden="true"></div>
+              <div class="face-grain" aria-hidden="true"></div>
+              <div class="pixel-screen" aria-hidden="true"></div>
+            </div>
+          </div>
+
+          <div class="stage-side-label stage-side-label--left" aria-hidden="true">MORPHOLOGY / A</div>
+          <div class="stage-side-label stage-side-label--right" aria-hidden="true">INPUT: POINTER</div>
+        </div>
+
+        <div class="lab-footer">
+          <div class="expression-readout"><span class="readout-dot"></span><span id="expression-state">EXPRESSION: NEUTRAL</span></div>
+          <button class="reset-button" id="reset-gaze" type="button"><span aria-hidden="true">↺</span> RECENTER GAZE</button>
+          <p class="lab-hint">MOVE POINTER TO INTERACT <span>·</span> PRESS TAB TO EXPLORE</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <span>INDEPENDENT CSS EXPERIMENT</span>
+      <span>NO CANVAS / NO FRAMEWORK / NO IMAGE ASSETS</span>
+      <span>BUILT TO RESPOND</span>
+    </footer>
+  </div>
+</body>
+</html>
