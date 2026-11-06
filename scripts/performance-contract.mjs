@@ -76,6 +76,21 @@ assert.doesNotMatch(cleanCss, /var\(--(?:mouse|gaze)-[xy]\)/, "Pointer state mus
 
 const promotedLayers = [...cleanCss.matchAll(/will-change:\s*transform\s*;/g)];
 assert.equal(promotedLayers.length, 4, "Keep explicit transform promotion limited to the four moving layer types");
+assert.match(
+  cleanCss,
+  /body:not\(\[data-mode="hyper"\]\) \.face-base,[\s\S]*?transform-style:\s*flat;/,
+  "Cartoon and pixel modes must flatten the shared 3D face tree"
+);
+assert.match(
+  cleanCss,
+  /body:not\(\[data-mode="hyper"\]\) \.face-stage\s*\{\s*perspective:\s*none;/,
+  "Perspective must be disabled outside the hyper mode"
+);
+assert.match(
+  cleanCss,
+  /body\[data-mode="pixel"\] \.face-base\s*\{[^}]*filter:\s*none;/s,
+  "Pixel mode must not filter the full facial subtree"
+);
 
 assert.match(js, /requestAnimationFrame/, "Pointer updates must be frame-coalesced");
 assert.match(js, /style\.transform\s*=/, "Pointer movement must write compositor transforms directly");
@@ -86,6 +101,8 @@ assert.doesNotMatch(
   "Pointer and expression handlers must not force layout reads"
 );
 assert.match(js, /\.animate\(/, "Expression motion must use Web Animations API");
+assert.match(js, /stageModeLabel\.animate\(/, "Mode transitions must animate the small label, not the entire stage");
+assert.match(js, /mode === "hyper"/, "Full 3D pointer motion must remain isolated to hyper mode");
 assert.match(cleanCss, /\.mode-button:active\s*\{[^}]*transform:[^}]*scale\(/s, "Mode tabs need immediate tactile feedback");
 assert.match(cleanCss, /\.reset-button:active\s*\{[^}]*transform:/s, "Reset control needs immediate tactile feedback");
 
