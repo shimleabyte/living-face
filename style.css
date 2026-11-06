@@ -7,30 +7,15 @@
 :root {
   color-scheme: dark;
   --ink: #111914;
-  --ink-soft: #19241e;
   --ink-line: rgba(222, 231, 204, .13);
   --paper: #dce3d0;
   --paper-muted: #8d9a89;
   --signal: #e1a16f;
-  --stage: #17231d;
-  --stage-light: #28382d;
-  --skin: #e8a77e;
-  --skin-light: #ffd0a3;
-  --skin-shadow: #a95745;
-  --skin-deep: #713c38;
-  --feature: #402b2a;
-  --eye-white: #f5e7d4;
-  --iris: #6c7860;
-  --pupil: #17211d;
-  --lip: #9b4f4a;
-  --mouth: #411f27;
   --motion: cubic-bezier(.2, .75, .2, 1);
   --mouse-x: 0;
   --mouse-y: 0;
   --gaze-x: 0px;
   --gaze-y: 0px;
-  --light-x: 50%;
-  --light-y: 22%;
   --pixel-step: 7px;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -1752,8 +1737,6 @@ a:focus-visible {
 
 /* CARTOON — heavy ink, cut-paper planes and deliberate graphic highlights. */
 body[data-mode="cartoon"] {
-  --stage: #17231d;
-  --skin: #e8a77e;
 }
 
 body[data-mode="cartoon"] .face-base {
@@ -1984,7 +1967,6 @@ body[data-mode="cartoon"] .face-surface::after {
 
 /* PIXEL — actual stepped silhouettes and sprite-like feature geometry. */
 body[data-mode="pixel"] {
-  --stage: #18272b;
   --pixel-step: 7px;
   background:
     radial-gradient(ellipse at 76% 12%, rgba(53, 101, 105, .13), transparent 40rem),
@@ -2428,8 +2410,6 @@ body[data-mode="pixel"] .mode-button.is-active::after {
 
 /* HYPER — face components occupy real depth planes with volumetric lighting. */
 body[data-mode="hyper"] {
-  --stage: #28251f;
-  --skin: #dca17d;
   background:
     radial-gradient(ellipse at 77% 8%, rgba(137, 104, 72, .12), transparent 43rem),
     #171714;
