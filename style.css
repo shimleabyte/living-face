@@ -2632,7 +2632,7 @@ body[data-mode="hyper"] .iris {
     repeating-conic-gradient(from 12deg, #b6a77c 0 2deg, #657a5d 3deg 7deg, #314a3c 8deg 12deg),
     radial-gradient(circle, #ad9e72, #3d5946);
   box-shadow: inset 0 0 0 2px rgba(222, 202, 146, .64), 0 0 0 1px rgba(35, 43, 33, .58);
-  transform: translate3d(calc(-50% + var(--gaze-x)), calc(-50% + var(--gaze-y)), 12px);
+  transform: translate3d(-50%, -50%, 12px);
 }
 
 body[data-mode="hyper"] .pupil {
