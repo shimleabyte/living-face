@@ -66,9 +66,7 @@
   };
 
   const handlePointerMove = (event) => {
-    if (event.pointerType === "touch") {
-      pointerActive = true;
-    }
+    pointerActive = true;
 
     pointerX = (event.clientX / Math.max(window.innerWidth, 1)) * 2 - 1;
     pointerY = (event.clientY / Math.max(window.innerHeight, 1)) * 2 - 1;
