@@ -1736,8 +1736,6 @@ a:focus-visible {
 }
 
 /* CARTOON — heavy ink, cut-paper planes and deliberate graphic highlights. */
-body[data-mode="cartoon"] {
-}
 
 body[data-mode="cartoon"] .face-base {
   border: 3px solid #4a2929;
