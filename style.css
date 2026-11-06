@@ -12,10 +12,6 @@
   --paper-muted: #8d9a89;
   --signal: #e1a16f;
   --motion: cubic-bezier(.16, 1, .3, 1);
-  --mouse-x: 0;
-  --mouse-y: 0;
-  --gaze-x: 0px;
-  --gaze-y: 0px;
   --pixel-step: 7px;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -607,10 +603,7 @@ a:focus-visible {
     inset -11px 0 17px rgba(103, 48, 43, .23),
     inset 0 -22px 28px rgba(104, 48, 43, .24),
     0 20px 40px rgba(5, 10, 7, .2);
-  transform:
-    translate3d(calc(var(--mouse-x) * -3px), calc(var(--mouse-y) * -2px), 0)
-    rotateX(calc(var(--mouse-y) * -1.5deg))
-    rotateY(calc(var(--mouse-x) * 2deg));
+  transform: translate3d(0, 0, 0);
   transform-style: preserve-3d;
   will-change: transform;
   transition: opacity 220ms ease-out;
@@ -960,7 +953,8 @@ a:focus-visible {
     repeating-conic-gradient(from 12deg, rgba(221, 191, 121, .42) 0 3deg, rgba(36, 66, 53, .7) 4deg 7deg, rgba(91, 111, 76, .8) 8deg 11deg),
     radial-gradient(circle, #a1a078 0 27%, #4d6852 60%, #253d34 100%);
   box-shadow: inset 0 0 0 2px rgba(208, 189, 125, .5), 0 0 0 1px rgba(45, 47, 35, .5);
-  transform: translate3d(calc(-50% + var(--gaze-x)), calc(-50% + var(--gaze-y)), 7px);
+  transform: translate3d(-50%, -50%, 7px);
+  will-change: transform;
 }
 
 .iris-ring {
@@ -1309,7 +1303,8 @@ a:focus-visible {
   background: radial-gradient(ellipse at 50% 42%, rgba(81, 38, 38, .38), rgba(113, 55, 49, .18) 43%, transparent 74%);
   filter: none;
   opacity: .75;
-  transform: translate3d(calc(var(--mouse-x) * -3px), calc(var(--mouse-y) * -2px), -2px);
+  transform: translate3d(0, 0, -2px);
+  will-change: transform;
   transition: opacity .3s ease;
 }
 
@@ -2039,7 +2034,7 @@ body[data-mode="pixel"] .face-base {
   );
   box-shadow: none;
   filter: drop-shadow(9px 12px 0 rgba(3, 12, 14, .55));
-  transform: translate3d(calc(var(--mouse-x) * -3px), calc(var(--mouse-y) * -2px), 0);
+  transform: translate3d(0, 0, 0);
   transition: none;
 }
 
@@ -2167,7 +2162,7 @@ body[data-mode="pixel"] .iris {
   background:
     repeating-linear-gradient(45deg, #9e9b69 0 3px, #48634d 3px 6px);
   box-shadow: inset 0 0 0 3px #6d7657, 0 0 0 1px #233b35;
-  transform: translate3d(calc(-50% + var(--gaze-x)), calc(-50% + var(--gaze-y)), 0);
+  transform: translate3d(-50%, -50%, 0);
   transition: none;
 }
 
@@ -2310,7 +2305,7 @@ body[data-mode="pixel"] .nose-cast-shadow {
   height: 28%;
   background: linear-gradient(90deg, transparent, rgba(71, 42, 37, .45), transparent);
   opacity: .8;
-  transform: translate3d(calc(var(--mouse-x) * -5px), 0, -1px);
+  transform: translate3d(0, 0, -1px);
 }
 
 body[data-mode="pixel"] .philtrum {
@@ -2491,10 +2486,7 @@ body[data-mode="hyper"] .face-base {
     inset -25px -6px 40px rgba(68, 34, 34, .36),
     inset 0 -28px 35px rgba(93, 43, 40, .27),
     0 35px 55px rgba(0, 0, 0, .48);
-  transform:
-    translate3d(calc(var(--mouse-x) * -5px), calc(var(--mouse-y) * -3px), 0)
-    rotateX(calc(var(--mouse-y) * -2deg))
-    rotateY(calc(var(--mouse-x) * 2.6deg));
+  transform: translate3d(0, 0, 0);
 }
 
 body[data-mode="hyper"] .face-base::before {
@@ -2771,7 +2763,7 @@ body[data-mode="hyper"] .nose-cast-shadow {
     radial-gradient(ellipse at 50% 42%, rgba(55, 25, 29, .52) 0%, rgba(92, 42, 42, .28) 36%, rgba(128, 59, 50, .09) 59%, transparent 76%);
   filter: none;
   opacity: .88;
-  transform: translate3d(calc(var(--mouse-x) * -7px), calc(var(--mouse-y) * -4px), -4px);
+  transform: translate3d(0, 0, -4px);
   transition: opacity 180ms ease-out;
 }
 
@@ -2868,20 +2860,6 @@ body[data-mode="hyper"] .face-base.is-blinking .eye {
 
 .face-base.is-awake .face-speculars {
   opacity: 1;
-}
-
-@supports (transform: translateX(calc(sin(45deg) * 1px))) {
-  body[data-mode="hyper"] .face-base {
-    transform:
-      translate3d(calc(sin(var(--mouse-x) * 34deg) * -5px), calc(sin(var(--mouse-y) * 26deg) * -3px), 0)
-      rotateX(calc(var(--mouse-y) * -2deg))
-      rotateY(calc(var(--mouse-x) * 2.6deg));
-  }
-
-  body[data-mode="hyper"] .nose-cast-shadow {
-    transform:
-      translate3d(calc(sin(var(--mouse-x) * 42deg) * -8px), calc(cos(var(--mouse-y) * 35deg) * -4px), -4px);
-  }
 }
 
 /* The pointer is a live light source; touch and keyboard users retain a stable face. */
@@ -3121,10 +3099,13 @@ body[data-mode="hyper"] .face-base.is-blinking .eye {
 
 .face-base {
   touch-action: manipulation;
+  transition: opacity 220ms ease-out, scale 140ms cubic-bezier(.16, 1, .3, 1);
 }
 
 .face-base:active {
   opacity: .94;
+  scale: .985;
+  transition: scale 140ms cubic-bezier(.16, 1, .3, 1), opacity 140ms ease-out;
 }
 
 .mode-button:active,
