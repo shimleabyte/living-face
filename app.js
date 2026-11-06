@@ -104,7 +104,7 @@
     } else {
       face.style.transform =
         "translate3d(" + (x * -3).toFixed(2) + "px, " + (y * -2).toFixed(2) + "px, 0) " +
-        "rotateX(" + (y * -1.5).toFixed(2) + "deg) rotateY(" + (x * 2).toFixed(2) + "deg)";
+        "rotate(" + (x * 1.2).toFixed(2) + "deg)";
     }
 
     const irisDepth = mode === "hyper" ? 12 : 0;
