@@ -170,7 +170,7 @@
 
     if (reducedMotion.matches || typeof face.animate !== "function") return;
 
-    state.modeAnimation = face.animate(
+    state.modeAnimation = stage.animate(
       [{ opacity: 0.88 }, { opacity: 1 }],
       {
         duration: 260,
