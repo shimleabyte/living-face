@@ -70,8 +70,8 @@
     state.frame = 0;
     if (document.hidden) return;
 
-    const x = state.pointerX;
-    const y = state.pointerY;
+    const x = reducedMotion.matches ? 0 : state.pointerX;
+    const y = reducedMotion.matches ? 0 : state.pointerY;
     const mode = body.dataset.mode;
     let faceX = x;
     let faceY = y;
@@ -87,8 +87,8 @@
       faceY = Math.round(y * 4) / 4;
       face.style.transform =
         "translate3d(" + Math.round(faceX * -12) + "px, " + Math.round(faceY * -8) + "px, 0)";
-      gazeX = Math.round(x * 8 / 5) * 5;
-      gazeY = Math.round(y * 5 / 5) * 5;
+      gazeX = Math.round(x * 8 / 2) * 2;
+      gazeY = Math.round(y * 5 / 2) * 2;
       noseX = Math.round(faceX * -8);
       noseY = 0;
       noseZ = -1;
