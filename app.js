@@ -16,7 +16,6 @@
     frame: 0,
     blinkTimer: 0,
     blinkEndTimer: 0,
-    speechTimer: 0,
     speechAnimation: null
   };
 
@@ -121,10 +120,6 @@
       state.speechAnimation.onfinish = () => { state.speechAnimation = null; };
     }
 
-    window.clearTimeout(state.speechTimer);
-    state.speechTimer = window.setTimeout(() => {
-      state.speechTimer = 0;
-    }, 620);
   };
 
   window.addEventListener("pointermove", handlePointerMove, { passive: true });
@@ -175,7 +170,6 @@
 
   window.addEventListener("pagehide", () => {
     stopBlink();
-    window.clearTimeout(state.speechTimer);
     if (state.frame) window.cancelAnimationFrame(state.frame);
   }, { once: true });
 
