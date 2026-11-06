@@ -12,10 +12,11 @@ All three systems reuse the same facial structure. Cartoon and pixel modes use a
 
 ## Interaction
 
+The page presents the portrait alone, centered in the viewport. No showcase copy, mode selector, status readout or decorative stage markings are rendered.
+
+
 - Move the pointer to steer the gaze and shift the face's directional light.
-- Select a material in the mode strip, or use **1**, **2** and **3**.
 - Click the portrait, or focus it and press **Enter** / **Space**, to trigger a short mouth response.
-- Use **Recenter Gaze** to return the portrait to its neutral orientation.
 - Automatic blinking pauses when the page is hidden and respects reduced-motion preferences.
 
 Pointer events are normalized to the **-1 to 1** range and coalesced into one `requestAnimationFrame` callback. That frame writes compositor-friendly `transform` values directly to the head, two irises, nose shadow and stage-light layer. It does not broadcast pointer variables through the document, mutate gradients, or read layout. The coordinate readout is informational and is throttled to 10 updates per second, outside the motion loop. The 16-bit mode quantizes head and iris positions into discrete sprite steps. No worker is used because there is no heavy filtering, parsing or list-processing workload to offload.
