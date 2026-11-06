@@ -160,6 +160,21 @@
 
   face.addEventListener("click", triggerSpeechMotion);
 
+  face.addEventListener("focus", () => {
+    face.classList.add("is-awake", "is-focused");
+  });
+
+  face.addEventListener("blur", () => {
+    face.classList.remove("is-focused");
+  });
+
+  face.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      triggerSpeechMotion();
+    }
+  });
+
   if (resetButton) {
     resetButton.addEventListener("click", () => {
       pointerActive = false;
