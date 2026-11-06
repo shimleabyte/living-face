@@ -225,14 +225,14 @@ a:focus-visible {
   background: rgba(220, 227, 208, .25);
 }
 
-.eyebrow {
+.intro-overline {
   color: var(--signal);
   font-size: 9px;
   font-weight: 750;
   letter-spacing: .2em;
 }
 
-.intro-rail > .eyebrow {
+.intro-rail > .intro-overline {
   margin: 58px 0 17px;
 }
 
@@ -2145,7 +2145,7 @@ body[data-mode="pixel"] .iris {
   background:
     repeating-linear-gradient(45deg, #9e9b69 0 3px, #48634d 3px 6px);
   box-shadow: inset 0 0 0 3px #6d7657, 0 0 0 1px #233b35;
-  transform: translate3d(calc(-50% + round(nearest, var(--gaze-x), 5px)), calc(-50% + round(nearest, var(--gaze-y), 5px)), 0);
+  transform: translate3d(calc(-50% + var(--gaze-x)), calc(-50% + var(--gaze-y)), 0);
   transition: transform .16s steps(4, end);
 }
 
@@ -2825,23 +2825,23 @@ body[data-mode="hyper"] .mode-button.is-active::after {
 
 /* Expression mechanics */
 .face-base.is-blinking .upper-eyelid {
-  transform: scaleY(1.65);
+  scale: 1 1.65;
 }
 
 .face-base.is-blinking .lower-eyelid {
-  transform: translateY(-25%);
+  translate: 0 -25%;
 }
 
 .face-base.is-blinking .eye {
-  transform: translateZ(22px) scaleY(.82);
+  scale: 1 .82;
 }
 
 body[data-mode="pixel"] .face-base.is-blinking .eye {
-  transform: translateZ(4px) scaleY(.84);
+  scale: 1 .84;
 }
 
 body[data-mode="hyper"] .face-base.is-blinking .eye {
-  transform: translateZ(37px) scaleY(.82);
+  scale: 1 .82;
 }
 
 .face-base.is-blinking .iris {
@@ -2857,8 +2857,8 @@ body[data-mode="hyper"] .face-base.is-blinking .eye {
 }
 
 @keyframes mouth-speech {
-  from { transform: translateZ(20px) scaleY(1); }
-  to { transform: translateZ(20px) scaleY(1.16); }
+  from { scale: 1 1; }
+  to { scale: 1 1.16; }
 }
 
 body[data-mode="pixel"] .face-base.is-speaking .mouth-structure {
@@ -2866,8 +2866,8 @@ body[data-mode="pixel"] .face-base.is-speaking .mouth-structure {
 }
 
 @keyframes pixel-speech {
-  from { transform: translateZ(6px) scaleY(1); }
-  to { transform: translateZ(6px) scaleY(1.18); }
+  from { scale: 1 1; }
+  to { scale: 1 1.18; }
 }
 
 @supports (transform: translateX(calc(sin(45deg) * 1px))) {
