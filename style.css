@@ -144,6 +144,10 @@ a:focus-visible {
   font-style: italic;
 }
 
+.topbar-kicker {
+  color: #a5b1a0;
+}
+
 .topbar-center {
   display: flex;
   justify-content: center;
@@ -593,6 +597,11 @@ a:focus-visible {
   transform-style: preserve-3d;
   transition: border-radius .6s var(--motion), filter .5s ease;
   will-change: transform;
+}
+
+.face-base:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 7px;
 }
 
 .face-base::before {
@@ -2966,7 +2975,7 @@ body[data-mode="pixel"] .face-base.is-speaking .mouth-structure {
     padding: 0;
   }
 
-  .intro-rail > .eyebrow {
+  .intro-rail > .intro-overline {
     margin: 27px 0 12px;
   }
 
